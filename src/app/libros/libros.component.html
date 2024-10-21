@@ -1,0 +1,82 @@
+
+<div  class="logo-contain">
+    <span class="page-name">Libros</span>
+  </div>
+  
+  <div class="contain-table">
+  
+    <div class="contain-buscador">
+    <div class="content-buscador">
+      <app-buscador [listaCliente]="dataSource" (inputBusqueda)="BuscarLibro($event)"  ></app-buscador> 
+    </div>
+    <!-- <div class="content-button">
+      <button  (click)="OpenRegisterDialog()" mat-flat-button>
+        <mat-icon>add</mat-icon>
+        Nuevo</button>
+    </div> -->
+  </div>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="autor">
+        <th mat-header-cell *matHeaderCellDef> Autor </th>
+        <td mat-cell *matCellDef="let element"> {{element.autor}} </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef> ISBN </th>
+        <td mat-cell *matCellDef="let element"> {{element.isbn}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let element"> {{element.estado?'Activo':'Inactivo' }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element" style="width: 230px;"> 
+            <div class="content-table-buttons">
+            <button mat-flat-button (click)="actualizarLibro(element.id)" >
+              <mat-icon>autorenew</mat-icon>
+              Actualizar</button>  
+              <button mat-flat-button (click)="eliminarLibro(element.id)"  color="warn">
+                <mat-icon>delete</mat-icon>
+                Eliminar</button>  
+              </div>
+          </td>
+        </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <mat-paginator #paginator
+                 class="demo-paginator"
+                 (page)="handlePageEvent($event)"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndexPaginator"
+                 [length]="TotalRecords"
+                 [showFirstLastButtons]="true"
+                 [hidePageSize]="false"
+                 aria-label="Select page">
+  </mat-paginator>
+  
+  </div>

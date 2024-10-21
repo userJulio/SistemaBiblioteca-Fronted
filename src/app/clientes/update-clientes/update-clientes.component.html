@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Cliente</h2>
+@if(mensajeError!==''){
+    <mat-error>
+        {{mensajeError}}
+    </mat-error>
+}
+
+<mat-dialog-content >
+<form class="grid" [formGroup]="formregistro"  id="formCliente"  >
+<div class="col-12">
+    <div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Nombre</mat-label>
+        <input  type="text" required  matInput formControlName="nombre" >
+    @if(validarCampo('nombre')){
+        <mat-error>
+            {{mostrarMensajeError('nombre')}}
+        </mat-error>
+    }
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Apellidos</mat-label>
+        <input  type="text" required  matInput formControlName="apellidos" >
+        @if(validarCampo('apellidos')){
+            <mat-error>
+                {{mostrarMensajeError('apellidos')}}
+            </mat-error>
+        }
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Dni</mat-label>
+        <input  type="text" required  matInput formControlName="dni" >
+        @if(validarCampo('dni')){
+            <mat-error>
+                {{mostrarMensajeError('dni')}}
+            </mat-error>
+        }
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Edad</mat-label>
+        <input  type="number" required  matInput formControlName="edad" >
+        @if(validarCampo('edad')){
+            <mat-error>
+                {{mostrarMensajeError('edad')}}
+            </mat-error>
+        }
+    </mat-form-field>
+</div>
+    <div class="content-buttons">
+        <button mat-flat-button color="warn"  (click)="onclose()" >Cancelar</button>
+        <button mat-flat-button color="primary"  type="submit" (click)="onGuardar()" [disabled]="validarBotonGuardar()" >Guardar</button>
+    </div>
+
+</div>
+</form>
+
+</mat-dialog-content>

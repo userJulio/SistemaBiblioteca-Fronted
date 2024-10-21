@@ -1,0 +1,20 @@
+
+
+
+
+
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Nombre</mat-label>
+      <input type="text"
+             placeholder="buscar..."
+             matInput
+             [formControl]="buscadorInput"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (option of listFiltroValores ; track option.id) {
+          <mat-option [value]="option.nombre">{{option.nombre}}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>

@@ -1,0 +1,16 @@
+
+<header class="menu-component">
+
+   <div class="menu-title">
+      <h2 class="text-menu">Páginas</h2>
+   </div>
+
+   <nav>
+    @for (item of listMenu; track $index) {
+        <li>
+            <a [routerLink]="item.ruta" routerLinkActive="active"  >{{item.pagina}}</a>
+        </li>
+    }
+   </nav>
+
+</header>
