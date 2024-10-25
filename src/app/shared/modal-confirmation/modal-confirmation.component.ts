@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogClose, MatDialogContent, MatDialogRef, MatDia
 import { ClienteService } from '../../clientes/services/cliente.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Clientes } from '../../clientes/interfaces/cliente.interface';
+import { Libros } from '../../libros/interfaces/libros.interface';
 
 @Component({
   selector: 'app-modal-confirmation',
@@ -17,7 +18,7 @@ import { Clientes } from '../../clientes/interfaces/cliente.interface';
 export class ModalConfirmationComponent {
 
   dialogRef = inject(MatDialogRef<ModalConfirmationComponent>);
-  data = inject<Clientes>(MAT_DIALOG_DATA);
+  data = inject<Clientes | Libros>(MAT_DIALOG_DATA);
   
   onSave(){
     this.dialogRef.close(true);

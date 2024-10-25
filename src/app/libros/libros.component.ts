@@ -8,6 +8,9 @@ import { BuscadorComponent } from '../shared/buscador/buscador.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Libros } from './interfaces/libros.interface';
 import { LibroService } from './services/libro.service';
+import { AddLibroComponent } from './components/add-libro/add-libro.component';
+import { UpdateLibroComponent } from './components/update-libro/update-libro.component';
+import { ModalConfirmationComponent } from '../shared/modal-confirmation/modal-confirmation.component';
 
 @Component({
   selector: 'app-libros',
@@ -40,6 +43,9 @@ export class LibrosComponent implements OnInit {
   pageEvent?: PageEvent;
   pageIndexPaginator: number = 0;
   dialog = inject(MatDialog);
+  inputBusqueda: string = '';
+  listaBusqueda:string[]=[];
+  titleBusqueda:string="Por Nombre";
 
   ngOnInit(): void {
     
@@ -52,7 +58,7 @@ export class LibrosComponent implements OnInit {
     this.pageSize = e.pageSize;
     this.pageIndexPaginator = e.pageIndex;
     let pagina = this.pageIndexPaginator + 1;
-    //this.getClientes(this.inputBusqueda, paginaCliente, this.pageSize);
+    this.getLibros(this.inputBusqueda, pagina, this.pageSize);
   }
 
   getLibros(nombre:string,pageindex:number,pagesize:number){
@@ -68,20 +74,93 @@ export class LibrosComponent implements OnInit {
               this.dataSource = libroData;
               let cantidadRegistros = !totalregistro ? 0 : Number(totalregistro);
               this.TotalRecords = cantidadRegistros;
+              this.listaBusqueda= this.dataSource.map(x=>x.nombre);
             }
           }
         });
   }
 
   BuscarLibro(valorbusqueda:string){
+   this.inputBusqueda=valorbusqueda;
+   this.pageSize = 10;
+   this.pageIndexPaginator = 0;
+   let paginaindex = this.pageIndexPaginator + 1;
+   this.getLibros(this.inputBusqueda, paginaindex, this.pageSize);
+  }
 
+  OpenRegisterDialog() {
+    const dialogRef = this.dialog.open(AddLibroComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {    
+      console.log("resultado",result);
+      if (result) {
+        this.getLibros('', 1, this.pageSize);
+      }
+    });
   }
 
   actualizarLibro(idlibro:number){
 
+    this.libroservice.getLibroById(idlibro).subscribe((resultado) => {
+   
+      if (!resultado) return;
+
+      if(!resultado.data){
+        alert("El libro no existe");
+        return;
+      }
+
+      if (resultado.data) {
+      
+        const dialogRef = this.dialog.open(UpdateLibroComponent, {
+          data: resultado.data,
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+         
+          if (result) {
+            this.getLibros('', 1, this.pageSize);
+          }
+        });
+      }
+     
+
+    });
+
   }
   eliminarLibro(idlibro:number){
+    this.libroservice.getLibroById(idlibro).subscribe((resultado) => {
+      if (!resultado) {
+        return;
+      }
+      if (!resultado.data) {
+        alert('El libro no existe');
+        return;
+      }
 
+      if (resultado.data) {
+
+        const dialogRef = this.dialog.open(ModalConfirmationComponent, {
+          data: resultado.data,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.deleteLibros(idlibro);
+          }
+        });
+      }
+    });
+  }
+  deleteLibros(idlibro: number) {
+    this.libroservice.deleteLibros(idlibro).subscribe((resultado) => {
+      if (!resultado) return;
+      if (resultado) {
+        if (resultado.succes) {
+          this.getLibros('', 1, this.pageSize);
+        }
+      }
+    });
   }
 
 }

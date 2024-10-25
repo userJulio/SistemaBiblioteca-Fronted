@@ -37,7 +37,6 @@ import { ModalConfirmationComponent } from '../shared/modal-confirmation/modal-c
 export class ClientesComponent implements OnInit {
   clienteservice = inject(ClienteService);
   clienteResponse?: ResponseClientes;
- 
 
   displayedColumns: string[] = [
     'id',
@@ -58,10 +57,10 @@ export class ClientesComponent implements OnInit {
   ClienteActualizar?: Clientes;
 
   inputBusqueda: string = '';
-  nombrePagina:string="Clientes";
+  listaBusqueda:string[]=[];
+  titleBusqueda:string="Por Nombre";
 
   ngOnInit(): void {
-    
     this.getClientes('', this.pageIndex, this.pageSize);
   }
 
@@ -87,6 +86,7 @@ export class ClientesComponent implements OnInit {
             this.dataSource = clientesData;
             let cantidadRegistros = !totalregistro ? 0 : Number(totalregistro);
             this.TotalRecords = cantidadRegistros;
+            this.listaBusqueda=this.dataSource.map(x=>x.nombre);
           }
         }
       });
@@ -105,20 +105,19 @@ export class ClientesComponent implements OnInit {
       data: { name: 'Juan', edad: 18 },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {    
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getClientes('', 1, this.pageSize);
       }
     });
   }
 
- actualizarCliente(idCliente: number) {
+  actualizarCliente(idCliente: number) {
     this.clienteservice.getClienteById(idCliente).subscribe((resultado) => {
-   
       if (!resultado) return;
 
-      if(!resultado.data){
-        alert("El cliente no existe");
+      if (!resultado.data) {
+        alert('El cliente no existe');
         return;
       }
 
@@ -127,29 +126,22 @@ export class ClientesComponent implements OnInit {
         const dialogRef = this.dialog.open(UpdateClientesComponent, {
           data: this.ClienteActualizar,
         });
-    
+
         dialogRef.afterClosed().subscribe((result) => {
-         
           if (result) {
             this.getClientes('', 1, this.pageSize);
           }
         });
       }
-     
-
     });
-
-
   }
   eliminarCliente(idCliente: number) {
-
     this.clienteservice.getClienteById(idCliente).subscribe((resultado) => {
-
       if (!resultado) {
         return;
-      };
-      if(!resultado.data){
-        alert("El cliente no existe");
+      }
+      if (!resultado.data) {
+        alert('El cliente no existe');
         return;
       }
 
@@ -158,32 +150,24 @@ export class ClientesComponent implements OnInit {
         const dialogRef = this.dialog.open(ModalConfirmationComponent, {
           data: this.ClienteActualizar,
         });
-    
+
         dialogRef.afterClosed().subscribe((result) => {
-         
           if (result) {
             this.deleteCliente(idCliente);
           }
         });
       }
-
-      
-
     });
-    
-
   }
 
-  deleteCliente(idcliente:number){
-      this.clienteservice.deleteClientes(idcliente).subscribe((resultado)=>{
-        if(!resultado) return;
-      if(resultado){
-        if(resultado.succes){
+  deleteCliente(idcliente: number) {
+    this.clienteservice.deleteClientes(idcliente).subscribe((resultado) => {
+      if (!resultado) return;
+      if (resultado) {
+        if (resultado.succes) {
           this.getClientes('', 1, this.pageSize);
         }
       }
-      });
+    });
   }
 }
-
-

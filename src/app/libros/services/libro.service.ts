@@ -2,7 +2,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { enviroment } from '../../../environments/environment.development';
 import { catchError, Observable, of } from 'rxjs';
-import { Libros, ResponseLibroById, ResponseLibros, ResponseLibrosPost } from '../interfaces/libros.interface';
+import { Libros, LibrosRequest, ResponseLibroById, ResponseLibros, ResponseLibrosPost } from '../interfaces/libros.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class LibroService {
 
   }
 
-  AddLibros(libro:Libros):Observable<ResponseLibrosPost | null>{
+  AddLibros(libro:LibrosRequest):Observable<ResponseLibrosPost | null>{
 
     return this.http.post<ResponseLibrosPost>(`${this.url}/api/book`,libro)
                 .pipe(
@@ -35,7 +35,7 @@ export class LibroService {
 
   }
 
-  updateLibros(idLibro:number, libro:Libros):Observable<ResponseLibros | null>{
+  updateLibros(idLibro:number, libro:LibrosRequest):Observable<ResponseLibros | null>{
 
      return this.http.put<ResponseLibros>(`${this.url}/api/book/${idLibro}`,libro)
                 .pipe(
@@ -61,6 +61,17 @@ export class LibroService {
     );
   }
 
+  getLibrosByIsbn(isbn:string):Observable<ResponseLibros | null>{
+
+    const parametro= new HttpParams()
+    .set("isbn",isbn);
+
+    return this.http.get<ResponseLibros>(`${this.url}/api/book/GeLibroeByIsbn`,{params:parametro})
+                  .pipe(
+                    catchError(err=> of(null))
+                  );
+
+  }
 
 
 }

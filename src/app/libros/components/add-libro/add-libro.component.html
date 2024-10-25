@@ -1,1 +1,58 @@
-<p>add-libro works!</p>
+
+
+
+<h2 mat-dialog-title>Libros</h2>
+
+<mat-dialog-content >
+<form class="grid" [formGroup]="formRegistro"  id="formCliente"  >
+<div class="col-12">
+    <div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Nombre</mat-label>
+        <input  type="text" required  matInput formControlName="nombre" >
+        @if(validarCampo('nombre')){
+            <mat-error>{{ mostrarMensajeError('nombre')}}</mat-error>
+        }
+     
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Autor</mat-label>
+        <input  type="text" required  matInput formControlName="autor" >
+        @if(validarCampo('autor')){
+            <mat-error>{{ mostrarMensajeError('autor')}}</mat-error>
+        }
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>ISBN</mat-label>
+        <input  type="text" required  matInput formControlName="isbn" >
+        @if(validarCampo('isbn')){
+            <mat-error>{{ mostrarMensajeError('isbn')}}</mat-error>
+        }
+    </mat-form-field>
+</div>
+<div class="row">
+    <mat-form-field class="col-12">
+        <mat-label>Estado</mat-label>
+        <mat-select  matInput formControlName="estado"  required>
+              <mat-option [value]="true" >Activo</mat-option>
+              <mat-option [value]="false">Inactivo</mat-option>
+        </mat-select>
+        @if(validarCampo('estado')){
+            <mat-error>{{ mostrarMensajeError('estado')}}</mat-error>
+        }
+    </mat-form-field>
+</div>
+    <div class="content-buttons">
+        <button mat-flat-button color="warn"  (click)="onclose()" >Cancelar</button>
+        <button mat-flat-button color="primary"  type="submit" (click)="onGuardar()" [disabled]="validarBotonGuardar()" >Guardar</button>
+    </div>
+
+</div>
+</form>
+
+</mat-dialog-content>
+

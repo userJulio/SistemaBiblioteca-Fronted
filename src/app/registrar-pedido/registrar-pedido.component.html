@@ -1,1 +1,134 @@
-<p>registrar-pedido works!</p>
+<div class="logo-contain">
+    <span class="page-name">Registrar Pedido</span>
+</div>
+
+<div class="contain-table">
+
+    <div class="card">
+        <div class="card-title-tab">Clientes</div>
+        <div class="card-body">
+           <form [formGroup]="formPedido">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="countdownDate">Fecha y Hora:</label>
+                            <input type="datetime-local" formControlName="fechaPedido" class="form-control" id="countdownDate"  value="2024-10-23T19:06"  >
+                        </div>
+                    </div>
+                </div>
+                <div class="row rowform">
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <app-buscador [lista]="listaByDni" [tituloBusqueda]="titleBusqueda" 
+                        (inputBusqueda)="buscarByDni($event)" ></app-buscador>
+                      @if(mensajeClienteNoExiste!==""){
+                        <mat-error>{{mensajeClienteNoExiste}}</mat-error>
+                      }                    
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 flex-buttons-pedido">
+                       <button mat-flat-button (click)="buscaryMostrarClientes()"><mat-icon>search</mat-icon> Buscar</button>
+                       <button mat-flat-button (click)="crerNuevoCliente()">
+                        <mat-icon>add</mat-icon>Nuevo Cliente</button>
+                    </div>
+                   
+                </div>
+                
+                <div class="row rowform">
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <mat-form-field class="col-12">
+                            <mat-label>Nombres</mat-label>
+                            <input  type="text" required formControlName="nombre"  matInput > 
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <mat-form-field class="col-12">
+                            <mat-label>Apellidos</mat-label>
+                            <input  type="text" required  matInput formControlName="apellidos" > 
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <mat-form-field class="col-12">
+                            <mat-label>Edad</mat-label>
+                            <input  type="text"   matInput required formControlName="edad"> 
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row rowform">
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <mat-form-field class="col-12">
+                            <mat-label>DNI</mat-label>
+                            <input  type="text" required  matInput formControlName="dni" > 
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+    <div class="card rowform">
+        <div class="card-title-tab">Libros</div>
+        <div class="card-body">
+           
+                <div class="row rowform">
+                    <div class="col-12 col-md-4 col-lg-4">
+                        <app-buscador [lista]="listaByIsbn" [tituloBusqueda]="titleBusquedaIsbn" 
+                        (inputBusqueda)="buscarByIsbn($event)" ></app-buscador>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4 flex-buttons-pedido">
+                       <button mat-flat-button  (click)="agregarLibroPedido()"><mat-icon>add</mat-icon> Agregar</button>
+                    </div>
+                </div>
+                <div class="row rowform">
+                    <div class="col-12">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="nombre">
+                          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="autor">
+                          <th mat-header-cell *matHeaderCellDef> Autor </th>
+                          <td mat-cell *matCellDef="let element"> {{element.autor}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="isbn">
+                            <th mat-header-cell *matHeaderCellDef> ISBN </th>
+                            <td mat-cell *matCellDef="let element"> {{element.isbn}} </td>
+                          </ng-container>
+                        
+                          <!-- Symbol Column -->
+                          <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef> Estado </th>
+                            <td mat-cell *matCellDef="let element"> {{element.estado?"Activo":"Inactivo" }} </td>
+                          </ng-container>
+                      
+                          <ng-container matColumnDef="acciones">
+                            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                            <td mat-cell *matCellDef="let element" style="width: 230px;"> 
+                                <div class="content-table-buttons">
+                                      <button mat-flat-button (click)="eliminarLibro(element.isbn)"  color="warn">
+                                        <mat-icon>delete</mat-icon>
+                                        Eliminar</button>  
+                                      </div>
+                            </td>
+                          </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                    </div>
+                </div>
+                
+        </div>
+    </div>
+    <div class="content-buttons-pedido">
+       
+            <div class="row rowform">
+                <div class="col-12">
+                    <button type="submit" (click)="guardarPedido()" style="float: right;" class="btn btn-success" >Guardar Pedido</button>
+                </div>
+            </div>
+
+    </div>
+
+</div>

@@ -31,21 +31,23 @@ import { Libros } from '../../libros/interfaces/libros.interface';
 })
 export class BuscadorComponent implements OnInit {
   buscadorInput = new FormControl('');
-  listFiltroValores: Clientes[] | Libros[]= [];
+  listFiltroValores: string[]= [];
 
   @Input()
-  listaCliente: Clientes[] | Libros[]= [];
+  lista: string[]= [];
+  @Input()
+  tituloBusqueda:string="";
 
   @Output()
   inputBusqueda = new EventEmitter<string>();
 
   ngOnInit(): void {
    
-    this.listFiltroValores = this.listaCliente || [];
+    this.listFiltroValores =  [];
     this.buscadorInput.valueChanges.subscribe((valores) => {
 
       let busqueda = !valores ? '' : valores;
-      this.listFiltroValores = this.listaCliente.slice(0,10);
+      this.listFiltroValores = this.lista.slice(0,10);
       this.inputBusqueda.emit(busqueda);
     });
   }

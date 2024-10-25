@@ -1,7 +1,7 @@
 
 export interface ResponseLibros{
     data?: Libros[] | null;
-    success:boolean;
+    succes:boolean;
     errorMessage:string | null;
 }
 
@@ -15,7 +15,7 @@ export interface Libros{
 
 export interface ResponseLibrosPost{
    data: number;
-   success:boolean;
+   succes:boolean;
    errorMessage:string | null;
 }
 

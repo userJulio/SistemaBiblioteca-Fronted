@@ -7,7 +7,7 @@
 
   <div class="contain-buscador">
   <div class="content-buscador">
-    <app-buscador [listaCliente]="dataSource" (inputBusqueda)="BuscarbyNombre($event)"  ></app-buscador> 
+    <app-buscador [lista]="listaBusqueda" [tituloBusqueda]="titleBusqueda"  (inputBusqueda)="BuscarbyNombre($event)"   ></app-buscador> 
   </div>
   <div class="content-button">
     <button  (click)="OpenRegisterDialog()" mat-flat-button>

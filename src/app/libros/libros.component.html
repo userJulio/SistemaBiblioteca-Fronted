@@ -7,13 +7,13 @@
   
     <div class="contain-buscador">
     <div class="content-buscador">
-      <app-buscador [listaCliente]="dataSource" (inputBusqueda)="BuscarLibro($event)"  ></app-buscador> 
+      <app-buscador [lista]="listaBusqueda" [tituloBusqueda]="titleBusqueda" (inputBusqueda)="BuscarLibro($event)"  ></app-buscador> 
     </div>
-    <!-- <div class="content-button">
+    <div class="content-button">
       <button  (click)="OpenRegisterDialog()" mat-flat-button>
         <mat-icon>add</mat-icon>
         Nuevo</button>
-    </div> -->
+    </div>
   </div>
   
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

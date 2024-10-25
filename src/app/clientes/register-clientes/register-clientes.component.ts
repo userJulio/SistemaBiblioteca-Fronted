@@ -87,7 +87,10 @@ onGuardar(){
       this.dialogRef.close(false);
       return;
     }
-      this.dialogRef.close(true);
+    if(clientCreado.succes){
+      this.dialogRef.close(clientCreado);
+    }
+    
    });
     
 

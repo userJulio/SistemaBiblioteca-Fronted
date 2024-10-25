@@ -69,4 +69,14 @@ export class ClienteService {
                 );
    }
 
+   getClientesByDni(Dni:string):Observable<ResponseClientes | null>{
+    const parametros=new HttpParams()
+    .set('Dni',Dni);
+    return this.http.get<ResponseClientes>(`${this.url}/api/customer/GetClienteByDni`,{params:parametros})
+              .pipe(
+                catchError(err=> of(null))
+              );
+              
+   }
+
 }
