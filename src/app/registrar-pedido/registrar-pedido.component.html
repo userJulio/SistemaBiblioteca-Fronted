@@ -96,6 +96,9 @@
                 </div>
                 <div class="row rowform">
                     <div class="col-12">
+               @if(flagexistelibro>0){
+                <mat-error>El libro seleccionado ya está agregado</mat-error>
+               }
                 @if(dataSource.length==0 && flaglibros>0){
                     <mat-error>Falta agregar libros</mat-error>
                 }

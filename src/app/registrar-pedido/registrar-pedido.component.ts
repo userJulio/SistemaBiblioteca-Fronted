@@ -85,6 +85,7 @@ export class RegistrarPedidoComponent implements OnInit {
   };
   mensajeClienteNoExiste="";
   flaglibros:number=0;
+  flagexistelibro:number=0;
 
   fb = inject(FormBuilder);
   formPedido: FormGroup = this.fb.group({
@@ -199,7 +200,11 @@ export class RegistrarPedidoComponent implements OnInit {
         let yaExisteLibro = this.dataSource.some(
           (x) => x.isbn === this.libroagregado?.isbn
         );
+        if(yaExisteLibro){
+          this.flagexistelibro=1;
+        }
         if (!yaExisteLibro) {
+          this.flagexistelibro=0;
           this.dataSource = [...this.dataSource, this.libroagregado];
         }
       }
