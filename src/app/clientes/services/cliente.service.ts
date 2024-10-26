@@ -11,6 +11,7 @@ export class ClienteService {
 
   http= inject(HttpClient);
   url= enviroment.baseUrl;
+  errorMessage:string="";
 
   constructor() { }
 
@@ -34,8 +35,10 @@ export class ClienteService {
 
   return this.http.post<RequestCliente>(`${this.url}/api/customer/GuardarCliente`,cliente)
           .pipe(
-            catchError( error=> {
-              return of(null)}
+            catchError( err=> {
+               this.errorMessage=err.error.errorMessage;
+              return of(null);
+              }
             )
           );
 
@@ -46,7 +49,10 @@ export class ClienteService {
 
     return this.http.put<ResponseClientes>(`${this.url}/api/customer/updateCustomer?idCliente=${idcliente}`,cliente)
                 .pipe(
-                  catchError( error=> of(null))
+                  catchError( err=> {
+                    this.errorMessage=err.error.errorMessage;
+                    return of(null);
+                  })
                   );
   }
 

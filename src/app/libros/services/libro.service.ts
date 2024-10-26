@@ -11,6 +11,7 @@ export class LibroService {
 
   http= inject(HttpClient);
   url= enviroment.baseUrl;
+  mensajeError:string="";
 
   getLibros(nombre:string, pageIndex:number,pageSize:number):Observable<HttpResponse<ResponseLibros> | null>{
 
@@ -30,7 +31,10 @@ export class LibroService {
 
     return this.http.post<ResponseLibrosPost>(`${this.url}/api/book`,libro)
                 .pipe(
-                  catchError(err=> of(null))
+                  catchError(err=> {
+                    this.mensajeError=err.error.errorMessage;
+                    return of(null);
+                  })
                 );
 
   }
@@ -39,7 +43,10 @@ export class LibroService {
 
      return this.http.put<ResponseLibros>(`${this.url}/api/book/${idLibro}`,libro)
                 .pipe(
-                  catchError(err=> of(null))
+                  catchError(err=> {
+                    this.mensajeError=err.error.errorMessage;
+                    return of(null);
+                  })
                 );
   }
 

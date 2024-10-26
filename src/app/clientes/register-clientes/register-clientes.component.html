@@ -43,6 +43,9 @@
         }
     </mat-form-field>
 </div>
+@if(mensajeErrorAdd!="" && mensajeErrorAdd){
+<mat-error>{{mensajeErrorAdd}}</mat-error>
+}
     <div class="content-buttons">
         <button mat-flat-button color="warn"  (click)="onclose()" >Cancelar</button>
         <button mat-flat-button color="primary"  type="submit" (click)="onGuardar()" [disabled]="validarBotonGuardar()" >Guardar</button>

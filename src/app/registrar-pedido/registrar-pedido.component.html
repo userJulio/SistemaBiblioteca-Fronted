@@ -38,18 +38,33 @@
                             <mat-label>Nombres</mat-label>
                             <input  type="text" required formControlName="nombre"  matInput > 
                         </mat-form-field>
+                    @if(this.formPedido.controls['nombre'].value=="" && flaglibros>0){
+                        <mat-error>
+                            El campo Nombre es requerido
+                        </mat-error>
+                    }
                     </div>
                     <div class="col-12 col-md-4 col-lg-4">
                         <mat-form-field class="col-12">
                             <mat-label>Apellidos</mat-label>
                             <input  type="text" required  matInput formControlName="apellidos" > 
                         </mat-form-field>
+                        @if(this.formPedido.controls['apellidos'].value=="" && flaglibros>0){
+                            <mat-error>
+                                El campo Apellidos es requerido
+                            </mat-error>
+                        }
                     </div>
                     <div class="col-12 col-md-4 col-lg-4">
                         <mat-form-field class="col-12">
                             <mat-label>Edad</mat-label>
                             <input  type="text"   matInput required formControlName="edad"> 
                         </mat-form-field>
+                        @if(this.formPedido.controls['edad'].value=="" && flaglibros>0){
+                            <mat-error>
+                                El campo Edad es requerido
+                            </mat-error>
+                        }
                     </div>
                 </div>
                 <div class="row rowform">
@@ -58,6 +73,11 @@
                             <mat-label>DNI</mat-label>
                             <input  type="text" required  matInput formControlName="dni" > 
                         </mat-form-field>
+                        @if(this.formPedido.controls['dni'].value=="" && flaglibros>0){
+                            <mat-error>
+                                El campo Dni es requerido
+                            </mat-error>
+                        }
                     </div>
                 </div>
             </form>
@@ -76,6 +96,9 @@
                 </div>
                 <div class="row rowform">
                     <div class="col-12">
+                @if(dataSource.length==0 && flaglibros>0){
+                    <mat-error>Falta agregar libros</mat-error>
+                }
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                       
                         <!-- Position Column -->

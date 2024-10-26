@@ -94,7 +94,8 @@ export class LibrosComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {    
       console.log("resultado",result);
       if (result) {
-        this.getLibros('', 1, this.pageSize);
+        let pageIndex= this.pageIndexPaginator+1;
+        this.getLibros('', pageIndex, this.pageSize);
       }
     });
   }
@@ -119,7 +120,8 @@ export class LibrosComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
          
           if (result) {
-            this.getLibros('', 1, this.pageSize);
+            let pageIndex= this.pageIndexPaginator+1;
+            this.getLibros('', pageIndex, this.pageSize);
           }
         });
       }
@@ -157,7 +159,8 @@ export class LibrosComponent implements OnInit {
       if (!resultado) return;
       if (resultado) {
         if (resultado.succes) {
-          this.getLibros('', 1, this.pageSize);
+          let pageIndex= this.pageIndexPaginator+1;
+          this.getLibros('', pageIndex, this.pageSize);
         }
       }
     });

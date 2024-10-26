@@ -33,6 +33,8 @@ export class AddLibroComponent {
   // data = inject<DialogData>(MAT_DIALOG_DATA);
  fb=inject(FormBuilder);
  serviciolibro= inject(LibroService);
+ mensajeErrorAdd:string="";
+
 
  formRegistro:FormGroup=this.fb.group({
   nombre:['',[Validators.required]],
@@ -68,7 +70,9 @@ mostrarMensajeError(campo: string): string | null{
 
   return null;
 }
-
+get obtenerMensajeError():string {
+  return this.serviciolibro.mensajeError;
+}
 
 onGuardar(){
   if(!this.formRegistro.valid) {
@@ -79,14 +83,11 @@ onGuardar(){
    this.serviciolibro.AddLibros(this.LibroActual).subscribe((librocreado)=>{
    
     if(!librocreado){
-
-      this.dialogRef.close(false);
+      this.mensajeErrorAdd=this.obtenerMensajeError;
       return;
     }
-    if(librocreado.succes){
+    if(librocreado){
       this.dialogRef.close(true);
-    }else{
-      this.dialogRef.close(false);
     }
 
    });

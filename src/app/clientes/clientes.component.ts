@@ -107,7 +107,8 @@ export class ClientesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getClientes('', 1, this.pageSize);
+        let pageIndex= this.pageIndexPaginator+1;
+        this.getClientes('', pageIndex, this.pageSize);
       }
     });
   }
@@ -129,7 +130,8 @@ export class ClientesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.getClientes('', 1, this.pageSize);
+            let pageIndex= this.pageIndexPaginator+1;
+            this.getClientes('', pageIndex, this.pageSize);
           }
         });
       }
@@ -165,7 +167,8 @@ export class ClientesComponent implements OnInit {
       if (!resultado) return;
       if (resultado) {
         if (resultado.succes) {
-          this.getClientes('', 1, this.pageSize);
+          let pageIndex= this.pageIndexPaginator+1;
+          this.getClientes('', pageIndex, this.pageSize);
         }
       }
     });

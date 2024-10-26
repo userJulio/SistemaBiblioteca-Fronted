@@ -34,6 +34,7 @@ export class RegisterClientesComponent {
     // data = inject<DialogData>(MAT_DIALOG_DATA);
    fb=inject(FormBuilder);
    servicioCliente= inject(ClienteService);
+   mensajeErrorAdd:string="";
 
    formRegistro:FormGroup=this.fb.group({
     nombre:['',[Validators.required]],
@@ -74,7 +75,9 @@ mostrarMensajeError(campo: string): string | null{
 
   return null;
 }
-
+get ObtenerMensajeError():string{
+  return this.servicioCliente.errorMessage;
+}
 
 onGuardar(){
   if(!this.formRegistro.valid) {
@@ -83,11 +86,12 @@ onGuardar(){
   }
  
    this.servicioCliente.AddCliente(this.ClienteActual).subscribe((clientCreado)=>{
+    
     if(!clientCreado){
-      this.dialogRef.close(false);
+      this.mensajeErrorAdd= this.ObtenerMensajeError;
       return;
     }
-    if(clientCreado.succes){
+    if(clientCreado){
       this.dialogRef.close(clientCreado);
     }
     

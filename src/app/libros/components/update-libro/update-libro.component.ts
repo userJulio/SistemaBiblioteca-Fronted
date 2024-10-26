@@ -30,6 +30,7 @@ export class UpdateLibroComponent implements OnInit {
   libroservicio = inject(LibroService);
   fb = inject(FormBuilder);
   mensajeError = '';
+  mensajeUpdateError="";
 
   formregistro: FormGroup = this.fb.group({
     nombre: ['', [Validators.required]],
@@ -67,6 +68,9 @@ export class UpdateLibroComponent implements OnInit {
 
     return null;
   }
+  get obtenerMensajeError():string {
+    return this.libroservicio.mensajeError;
+  }
 
   obtenerDatosCliente() {
     this.formregistro.reset(this.data);
@@ -92,6 +96,7 @@ export class UpdateLibroComponent implements OnInit {
       .updateLibros(id, this.libroActual)
       .subscribe((clientCreado) => {
         if (!clientCreado) {
+          this.mensajeUpdateError=this.obtenerMensajeError;
           return;
         }
         if (clientCreado) {

@@ -41,6 +41,7 @@ export class UpdateClientesComponent implements OnInit {
   clienteserivcio = inject(ClienteService);
   fb = inject(FormBuilder);
   mensajeError = '';
+ mensajeErrorUpdate="";
 
   formregistro: FormGroup = this.fb.group({
     nombre: ['', [Validators.required]],
@@ -99,6 +100,11 @@ export class UpdateClientesComponent implements OnInit {
     }
     return false;
   }
+
+  get ObtenerMensajeError():string{
+    return this.clienteserivcio.errorMessage;
+  }
+
   onGuardar() {
     if (!this.formregistro.valid) {
       this.formregistro.markAllAsTouched();
@@ -109,9 +115,11 @@ export class UpdateClientesComponent implements OnInit {
       .updateCliente(id, this.ClienteActual)
       .subscribe((clientCreado) => {
         if (!clientCreado) {
+          this.mensajeErrorUpdate=this.ObtenerMensajeError;
           return;
         }
         if (clientCreado) {
+
           if (clientCreado.succes) {
             this.dialogRef.close(true);
           } else {

@@ -84,6 +84,7 @@ export class RegistrarPedidoComponent implements OnInit {
     edad:0
   };
   mensajeClienteNoExiste="";
+  flaglibros:number=0;
 
   fb = inject(FormBuilder);
   formPedido: FormGroup = this.fb.group({
@@ -263,9 +264,22 @@ export class RegistrarPedidoComponent implements OnInit {
       }
     });
   }
-
+  validarCampo(campo:string):boolean | null{
+    return this.formPedido.controls[campo].errors && this.formPedido.controls[campo].touched;
+  }
+  
+  mostrarMensajeError(campo: string): string | null{
+  
+   if(this.formPedido.controls[campo].hasError('required')){
+     return  `El campo ${campo} es requerido`; 
+   }
+  
+    return null;
+  }
   guardarPedido() {
+
     if (this.formPedido.invalid || this.dataSource.length <= 0) {
+      this.flaglibros=1;
       this.formPedido.markAllAsTouched();
       return;
     }
@@ -289,7 +303,12 @@ export class RegistrarPedidoComponent implements OnInit {
       if (!pedido) return;
       if (pedido.data) {
         if (pedido.data > 0) {
+        
           alert('Se registro correctamente el pedido');
+          this.formPedido.reset();
+          this.flaglibros=0;
+          this.formPedido.controls['fechaPedido'].setValue(this.obtenerFechaActual());
+          this.dataSource=[];
         }
       }
     });

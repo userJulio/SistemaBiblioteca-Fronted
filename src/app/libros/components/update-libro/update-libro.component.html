@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Cliente</h2>
+<h2 mat-dialog-title>Libros</h2>
 @if(mensajeError!==''){
     <mat-error>
         {{mensajeError}}
@@ -53,6 +53,11 @@
       }
     </mat-form-field>
 </div>
+@if(mensajeUpdateError!="" && mensajeUpdateError){
+<div class="row">
+<mat-error>{{mensajeUpdateError}}</mat-error>
+</div>
+}
     <div class="content-buttons">
         <button mat-flat-button color="warn"  (click)="onclose()" >Cancelar</button>
         <button mat-flat-button color="primary"  type="submit" (click)="onGuardar()" [disabled]="validarBotonGuardar()" >Guardar</button>
