@@ -134,3 +134,8 @@ form.grid{
 .content-btn-buscar {
     padding-bottom: 16px;
 }
+.content-table-paginator {
+    overflow: auto;
+    background-color: #fff;
+    box-shadow: var(--mat-app-elevation-shadow-level-8, none);
+}

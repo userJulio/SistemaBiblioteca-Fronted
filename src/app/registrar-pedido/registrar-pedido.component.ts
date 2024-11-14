@@ -162,21 +162,22 @@ export class RegistrarPedidoComponent implements OnInit {
   }
 
   getLibrosByIsbn(isbn: string) {
+    console.log("isban",isbn);
     this.servicioLibros.getLibrosByIsbn(isbn).subscribe((libros) => {
       if (!libros) return;
       if (libros.data) {
         this.listaLibros = libros.data.filter((x) => x.estado);
         this.listaByIsbn = this.listaLibros.map((x) => x.isbn);
         this.libroagregado = this.listaLibros.map((x) => {
-          let libros: LibrosRequest;
+          let libros!: LibrosRequest;   
           libros = {
             nombre: x.nombre,
             autor: x.autor,
             isbn: x.isbn,
             estado: x.estado,
-          };
-          return libros;
-        })[0];
+          };      
+        return libros;          
+        }).filter(x=>x.isbn.trim().toLowerCase()==isbn.trim().toLowerCase())[0];
         console.log('Libro Agregado', this.libroagregado);
       }
     });
@@ -197,6 +198,7 @@ export class RegistrarPedidoComponent implements OnInit {
       if (
         this.libroagregado.isbn.toLowerCase() == this.IsbnBusqueda.toLowerCase()
       ) {
+        console.log("datasource",this.dataSource);
         let yaExisteLibro = this.dataSource.some(
           (x) => x.isbn === this.libroagregado?.isbn
         );
